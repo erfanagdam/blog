@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div role="main" class="container">
+      <br><br><br>
+      <div class="row">
+        <div class="col-md-9" style="border-left:2px solid #444A50;">
+<!--XXX this is for POST XXX-->
+          <span class="h4">
+            {{ post.title }}
+          </span>
+          <p class="text-muted" style="margin:2px 20px 2px auto;">
+            <small><span>
+            نویسنده:
+            {{post.author.first_name}}
+            </span>&nbsp;&nbsp;&nbsp;<span>
+            تاریخ انتشار :
+            {{ post.pubDate|date:"d m y" }}
+            </span></small>
+          </p>
+          <div class="text-justify" style ="">
+            <p style="margin-left: 10px !important;">
+              {{ post.text|safe }}
+            </p>
+          </div>
+<!--XXX  POST ends -->
+        </div>
+        <div class="col-md-3">
+          <h4>آخرین مطالب</h4>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            دانلود کتاب داده کاوی
+          </a>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            چگونه بفهمیم داده‌های ما از توزیع نرمال پیروی می‌کند یا خیر؟
+          </a>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            بیگ دیتا
+          </a>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            مقدماتی در مورد جنگو
+          </a>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            چگونه یک سرور خانگی راه بیاندازیم؟
+          </a>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            دانلود کتاب داده کاوی
+          </a>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            دست هارا کثیف کنید
+          </a>
+          <hr>
+        </div>
+      </div>
+      <br>
+<!--- comment--->
+      {% for comments in comments.all %}
+        <div class="alert alert-secondary" style="margin-right:30px;border-right:2px solid #8BC34A" role="alert">
+          <h4 class="alert-heading">{{ comments.user }}</h4>
+          <p>{{ comments.text }}</p>
+          <hr>
+          {% if user.is_authenticated %}
+          <button class="btn btn-sm" id = 'reply' onclick="reply()" style= "display:inline;background-color:#8BC34A;" name="" >reply</button>
+          {% endif %}
+          <button class="btn btn-sm" onclick="cancel()" id = 'cancel' style = "display:none;background-color:#F44336;" name="" >cancel</button>
+          <button class="btn btn-sm" id = 'show-replies' onclick="show()"style= "display:inline;background-color:#8BC34A;" name="" >show replies</button>
+          <button class="btn btn-sm" id = 'hide-replies' onclick="hide()" style="display:none;background-color:#F44336;" name="" >hide replies</button>
+
+        </div>
+        <textarea class="form-control form-control-costomized" id='textarea' style="margin-right:30px;width:180px;height:80px;display: none;border:1px solid #8BC34A !important;" type="text" name="" placeholder="reply"></textarea>
+        <br>
+
+        <div id='comments' style="display: none;">
+          {% for reply in comments.replies.all %}
+          <div class="alert alert-secondary"  style="margin-right:45px;border-right:2px solid #448AFF" role="alert">
+            <h6 class="alert-heading">{{ reply.user }}</h6>
+            <p class="mb-0" >{{ reply.text }}</p>
+          </div>
+          {% endfor %}
+        </div>
+
+      {% endfor %}
+<!---->
+    </div>
+    <br><br><br><br><br>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+
+    <div role="main" class="container">
+      <br><br><br>
+      <div class="row">
+        <div class="col-md-9" style="border-left:2px solid #444A50;">
+
+<!--XXX this is for POST XXX-->
+          {% if error %}
+          <img class="img-fluid mx-auto d-block" src="{% static 'staticTemplates/happy.png' %}" width = "120px" height = "150px" >
+          <div class="background-color">
+          <h5 class="mjFont" style="text-align:center;">{{error}}</h5>
+          </div>
+          {% endif %}
+          {% for post in post.all %}
+          <div class="spinner-grow spinner-grow-sm"  style="color: #9c88ff;" role="status"></div>
+          <span class="h4">
+            <a style="text-decoration: none;color:#454B51;" href="javascript:{document.getElementById('post{{post.id}}').submit()}">
+            {{ post.title|safe }}
+            </a>
+          </span>
+          <form id="post{{post.id}}" action="{% url 'post' post.id %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden">
+          </form>
+              <p class="text-muted" style="margin:2px 20px 2px auto;">
+                <small><span>
+                نویسنده:
+                {{post.author.first_name}}
+                </span>&nbsp;&nbsp;&nbsp;<span>
+                تاریخ انتشار :
+                {{ post.pubDate|date:"d m y" }}
+                </span></small>
+              </p>
+          <div class="text-justify" style ="margin-right:20px;">
+            <p style="">
+              {{ post.text|safe|truncatewords:30 }}
+            </p>
+          </div>
+          <br><hr>
+          {% endfor %}
+<!--XXX  POST ends  XXX-->
+
+        </div>
+        <div class="col-md-3">
+          <h4>آخرین مطالب</h4>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            دانلود کتاب داده کاوی
+          </a>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            چگونه بفهمیم داده‌های ما از توزیع نرمال پیروی می‌کند یا خیر؟
+          </a>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            بیگ دیتا
+          </a>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            مقدماتی در مورد جنگو
+          </a>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            چگونه یک سرور خانگی راه بیاندازیم؟
+          </a>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            دانلود کتاب داده کاوی
+          </a>
+          <hr>
+          <a href="#" style="text-decoration: none;">
+            دست هارا کثیف کنید
+          </a>
+          <hr>
+        </div>
+      </div>
+    </div>
+    <br><br><br><br><br>
+{% endblock %}

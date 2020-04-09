@@ -1,0 +1,126 @@
+<!doctype html>
+
+<html lang="en" dir="rtl">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css" integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>erfna.blog</title>
+  </head>
+
+  <body>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" style="position: absolute;left: 50%;transform: translateX(-50%);" href="#">عرفان بلاگ</a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home'%}">خانه</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              ارتباط با من
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'comment'%}">کامنت بزارید</a>
+              <a class="dropdown-item" href="{% url 'contact'%}">راه های ارتباطی</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'aboutMe' %}">درباره ی من</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'support'%}">حمایت</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li>
+            <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'home' %}">
+              {% csrf_token %}
+              <input class="form-control form-control-nav-search mr-sm-2" style="text-align: right;" name="search" type="search" placeholder="جستجو" >
+            </form>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}">خروج</a>
+            <form id="logout" action="{% url 'logout' %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" ></input>
+            </form>
+          </li>
+         {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <!---XXX-XXX--->
+
+
+    {% block content %}
+
+
+
+    {% endblock  %}
+
+
+    <!---XXX-XXX--->
+
+    <footer class="footer fixed-bottom">
+      <div class="container">
+        <br>
+        <div class="spinner-grow spinner-grow-sm" style="color: #e84118;" role="status">
+        </div>
+        <span class="text-muted">رگ های این بلاگ با جنگو پمپاژ می شوند .</span>
+        <br><br>
+      </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+    <script  >
+      function show() {
+            document.getElementById('comments').style.display = "block";
+            document.getElementById('hide-replies').style.display = "inline";
+            document.getElementById('show-replies').style.display = "none";
+          }
+      function hide() {
+            document.getElementById('comments').style.display = "none";
+            document.getElementById('show-replies').style.display = "inline";
+            document.getElementById('hide-replies').style.display = "none";
+          }
+      function reply() {
+            document.getElementById('textarea').style.display = "block";
+            document.getElementById('cancel').style.display = "inline";
+            document.getElementById('reply').style.display = "none";
+          }
+      function cancel() {
+            document.getElementById('textarea').style.display = "none";
+            document.getElementById('reply').style.display = "inline";
+            document.getElementById('cancel').style.display = "none";
+
+          }
+      function login() {
+            document.getElementById('sign-up').style.display = "none";
+            document.getElementById('log-in').style.display = "inline";
+
+          }
+      function signup() {
+            document.getElementById('sign-up').style.display = "inline";
+            document.getElementById('log-in').style.display = "none";
+
+          }
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js" integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<!---XXX-XXX--->
+<!---XXX spacing XXX--->
+<!---XXX spacing XXX--->
+<div role="main" class="container">
+ <br>
+<div class="row">
+  <div class="col-md-6">
+    <div class="">
+    <h5 class="text-justify">دوست عزیز با ثبتنام/ ورود  میتوانید نظرات و پیشنهادات خود را در مورد وبلاگ به اشتراک بگذارید هر پیشنهاد و انتقادی میتونه بهمون کلی انرژی بده</h5>
+    </div>
+    <div class="text-justify">
+        <h5>ما همچنان منتظر انرژی مثبت و حمایت شما هستیم اگه خواستی حمایت مالی کنی کافیه لینک  زیر رو فشار بدی </h5>
+    </div>
+
+    <div class="background-color3">
+      <br>
+    <!--  <a href="{% url 'support' %}"><h4><b>حمایت مالی</b></h4></a> -->
+      <img width="280" height="250" src="{% static 'staticTemplates/donateBox2.png'%}" alt="">
+      <br>
+    </div>
+  </div>
+  <div class="col-md-6">
+          <div class="card" style="width: 19rem;">
+            <div style="text-align:center;">
+            <a  href = "#" onclick="signup()" style="text-decoration:none;color:#7C4DFF;"><h3>signup</h3></a>
+            <a  href = "#" onclick="login()" style="text-decoration:none;color:#7C4DFF;"><h3>login</h3></a>
+           </div>
+          <div id = 'sign-up' style="display:inline;">
+            <form class="form-signin" method="POST" action="{% url 'signup' %}">
+              {% csrf_token %}
+              <h1 class="h3 mb-3 font-weight-normal">
+                {% if error %}
+                <p>{{ error }}</p>
+                {% else %}
+                <div style="text-align:center;">
+              </div>
+              {% endif %}
+              </h1>
+              <input type="text" class="form-control form-control-costomized mb-2" style="border:1px solid #BDBDBD !important;" name = "username" placeholder="نام کاربری"  autocomplete="new-username" required >
+              <input type="password"  class="form-control form-control-costomized mb-2" style="border:1px solid #BDBDBD !important;" name = "password" placeholder="رمز عبور"  autocomplete="new-password" required>
+              <input type="password"  class="form-control form-control-costomized mb-2" style="border:1px solid #BDBDBD !important;" name = "password-retype" placeholder="تکرار رمز عبور"  autocomplete="new-password" required>
+                <br>
+              <input class="btn mx-auto d-block" style="background-color:#8BC34A;margin:auto;" type="submit" value="ثبتنام"></input>
+              </form>
+            </div>
+
+            <div id = 'log-in' style="display:none;">
+              <form class="form-signin" method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <h1 class="h3 mb-3 font-weight-normal">
+                  {% if error %}
+                  <p>{{ error }}</p>
+                  {% else %}
+                  <div style="text-align:center;">
+                </div>
+                {% endif %}
+                </h1>
+                <input type="text" class="form-control form-control-costomized mb-2" style="border:1px solid #8BC34A !important;direction:rtl;" name = "username" placeholder="نام کاربری"  autocomplete="new-username" required >
+                <input type="password"  class="form-control form-control-costomized mb-2" style="border:1px solid #8BC34A !important;direction:rtl;" name = "password" placeholder="رمز عبور"  autocomplete="new-password" required>
+                <br>
+                <input class="btn mx-auto d-block" style="background-color:#8BC34A;margin:auto;" type="submit" value= "login"></input>
+                </form>
+              </div>
+          </div>
+    </div>
+</div>
+<hr>
+<br>
+<p style="margin-right:30px;">تعداد کامنت های ثبت شده {{commentCount}}</p>
+{% for comments in comments.all %}
+  <div class="alert alert-secondary" style="margin-right:30px;border-right:2px solid #8BC34A" role="alert">
+    <h4 class="alert-heading">{{ comments.user }}</h4>
+    <p>{{ comments.text }}</p>
+    <hr>
+    {% if user.is_authenticated %}
+    <button class="btn btn-sm" id = 'reply' onclick="reply()" style= "display:inline;background-color:#8BC34A;" name="" >reply</button>
+    {% endif %}
+    <button class="btn btn-sm" onclick="cancel()" id = 'cancel' style = "display:none;background-color:#F44336;" name="" >cancel</button>
+    <button class="btn btn-sm" id = 'show-replies' onclick="show()"style= "display:inline;background-color:#8BC34A;" name="" >show replies</button>
+    <button class="btn btn-sm" id = 'hide-replies' onclick="hide()" style="display:none;background-color:#F44336;" name="" >hide replies</button>
+
+  </div>
+  <textarea class="form-control form-control-costomized" id='textarea' style="margin-right:30px;width:180px;height:80px;display: none;border:1px solid #8BC34A !important;" type="text" name="" placeholder="reply"></textarea>
+  <br>
+
+  <div id='comments' style="display: none;">
+    {% for reply in comments.replies.all %}
+    <div class="alert alert-secondary"  style="margin-right:45px;border-right:2px solid #448AFF" role="alert">
+      <h6 class="alert-heading">{{ reply.user }}</h6>
+      <p class="mb-0" >{{ reply.text }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+{% endfor %}
+
+
+<!---XXX-XXX--->
+<!---XXX spacing XXX--->
+<br><br><br><br>
+<!---XXX spacing XXX--->
+
+
+{% endblock %}

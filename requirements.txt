@@ -1,0 +1,17 @@
+asgiref==3.2.7
+Django==3.0.5
+django-ckeditor==5.9.0
+django-environ==0.4.5
+django-jalali==3.3.0
+django-js-asset==1.2.2
+django-pagedown==2.0.3
+django-tinymce==2.8.0
+jdatetime==3.6.2
+numpy==1.18.2
+Pillow==7.1.1
+pkg-resources==0.0.0
+psycopg2==2.8.4
+python-dotenv==0.12.0
+pytz==2019.3
+six==1.14.0
+sqlparse==0.3.1
